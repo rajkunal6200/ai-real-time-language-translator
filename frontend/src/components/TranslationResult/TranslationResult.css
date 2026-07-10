@@ -1,40 +1,31 @@
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+section:has(> textarea[readOnly]) {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 16px;
+  align-items: center;
   background-color: #ffffff;
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-#language-selection {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
+section:has(> textarea[readOnly]) h2 {
+  grid-column: 1 / -1;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--text-h, #08060d);
 }
 
-#text-input {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: stretch;
-}
-
-#actions {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 16px;
-}
-
-textarea {
+section:has(> textarea[readOnly]) textarea {
+  grid-column: 1 / -1;
   width: 100%;
   min-height: 150px;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid var(--border, #e5e4e7);
+  background-color: #f9f9f9;
+  color: var(--text-h, #08060d);
   font-family: inherit;
   font-size: 1rem;
   resize: vertical;
@@ -42,56 +33,36 @@ textarea {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-textarea:focus {
+section:has(> textarea[readOnly]) textarea:focus {
   outline: none;
   border-color: var(--accent, #aa3bff);
   box-shadow: 0 0 0 2px var(--accent-bg, rgba(170, 59, 255, 0.1));
 }
 
-button {
+section:has(> textarea[readOnly]) button {
   padding: 10px 20px;
   border-radius: 6px;
   border: 1px solid var(--border, #e5e4e7);
   background-color: #ffffff;
   cursor: pointer;
+  font-family: inherit;
   font-size: 0.95rem;
   font-weight: 500;
   transition: all 0.2s ease;
 }
 
-button:hover:not(:disabled) {
+section:has(> textarea[readOnly]) button:hover:not(:disabled) {
   background-color: #f4f3ec;
   border-color: #c5c4c7;
 }
 
-button:focus-visible {
+section:has(> textarea[readOnly]) button:focus-visible {
   outline: none;
   border-color: var(--accent, #aa3bff);
   box-shadow: 0 0 0 2px var(--accent-bg, rgba(170, 59, 255, 0.1));
 }
 
-button:disabled {
+section:has(> textarea[readOnly]) button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-button[type="submit"] {
-  background-color: var(--accent, #aa3bff);
-  color: #ffffff;
-  border: none;
-}
-
-button[type="submit"]:hover:not(:disabled) {
-  opacity: 0.9;
-}
-
-#actions p {
-  background-color: #fef2f2;
-  border: 1px solid #fca5a5;
-  border-radius: 6px;
-  padding: 10px 14px;
-  color: #991b1b;
-  font-size: 0.9rem;
-  margin: 0;
-  box-sizing: border-box;
 }

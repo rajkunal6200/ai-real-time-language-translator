@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import "./DocumentTranslator.css"
 import * as pdfjsLib from "pdfjs-dist"
 import mammoth from "mammoth"
 
@@ -11,6 +12,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 function DocumentTranslator({ onExtractedText }) {
   const fileInputRef = useRef(null)
   const [error, setError] = useState("")
+  const [isProcessing, setIsProcessing] = useState(false)
   const handleDocumentSelect = async (event) => {
     setError("")
     const file = event.target.files[0]
@@ -20,15 +22,19 @@ function DocumentTranslator({ onExtractedText }) {
     }
 
     if (file.type === "text/plain") {
+      setIsProcessing(true)
       try {
         const text = await file.text()
         onExtractedText(text)
       } catch {
         setError("Failed to read the document.")
+      } finally {
+        setIsProcessing(false)
       }
     }
 
     if (file.type === "application/pdf") {
+      setIsProcessing(true)
       try {
         const arrayBuffer = await file.arrayBuffer()
         const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
@@ -41,12 +47,15 @@ function DocumentTranslator({ onExtractedText }) {
         onExtractedText(text)
       } catch {
         setError("Failed to read the PDF document.")
+      } finally {
+        setIsProcessing(false)
       }
     }
 
     if (
       file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
+      setIsProcessing(true)
       try {
         const arrayBuffer = await file.arrayBuffer()
         const result = await mammoth.extractRawText({
@@ -55,13 +64,17 @@ function DocumentTranslator({ onExtractedText }) {
         onExtractedText(result.value)
       } catch {
         setError("Failed to read the DOCX document.")
+      } finally {
+        setIsProcessing(false)
       }
     }
   }
 
   return (
     <div>
-      <button type="button" onClick={() => fileInputRef.current.click()}>Upload Document</button>
+      <button type="button" onClick={() => fileInputRef.current.click()} disabled={isProcessing}>
+        {isProcessing ? "Processing..." : "Upload Document"}
+      </button>
       {error && <p>{error}</p>}
       <input type="file" accept=".pdf,.docx,.txt" ref={fileInputRef} onChange={handleDocumentSelect} hidden />
     </div>

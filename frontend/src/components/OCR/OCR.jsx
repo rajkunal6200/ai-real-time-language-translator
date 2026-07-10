@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react"
+import "./OCR.css"
 import Tesseract from "tesseract.js"
 
 function OCR({ onExtractedText }) {
   const fileInputRef = useRef(null)
   const [error, setError] = useState("")
   const [selectedImage, setSelectedImage] = useState(null)
-  const [extractedText, setExtractedText] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
   const [imagePreview, setImagePreview] = useState("")
 
@@ -31,11 +31,9 @@ function OCR({ onExtractedText }) {
       return
     }
     setSelectedImage(file)
-    setExtractedText("")
     setIsProcessing(true)
     try {
       const result = await Tesseract.recognize(file, "eng")
-      setExtractedText(result.data.text)
       onExtractedText(result.data.text)
     } catch {
       setError("Failed to process image. Please try another image.")

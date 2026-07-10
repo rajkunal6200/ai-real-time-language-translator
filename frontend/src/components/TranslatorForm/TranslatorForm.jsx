@@ -1,4 +1,5 @@
 import { useState } from "react"
+import "./TranslatorForm.css"
 import LanguageSelector from "../LanguageSelector/LanguageSelector"
 import { languages } from "../../data/languages"
 import { translateText } from "../../services/api"

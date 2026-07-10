@@ -1,3 +1,5 @@
+import "./LanguageSelector.css"
+
 function LanguageSelector({ label, name, options, value, onChange }) {
   return (
     <div>

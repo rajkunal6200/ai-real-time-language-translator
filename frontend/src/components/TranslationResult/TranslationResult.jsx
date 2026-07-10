@@ -1,4 +1,5 @@
 import { useState } from "react"
+import "./TranslationResult.css"
 
 function TranslationResult({ translatedText }) {
   const [copied, setCopied] = useState(false)

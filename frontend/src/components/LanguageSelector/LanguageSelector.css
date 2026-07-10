@@ -1,0 +1,35 @@
+div:has(> select[name="source"]),
+div:has(> select[name="target"]) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 150px;
+}
+
+label[for="source"],
+label[for="target"] {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-h, #08060d);
+}
+
+select[name="source"],
+select[name="target"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border, #e5e4e7);
+  background-color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select[name="source"]:focus,
+select[name="target"]:focus {
+  outline: none;
+  border-color: var(--accent, #aa3bff);
+  box-shadow: 0 0 0 2px var(--accent-bg, rgba(170, 59, 255, 0.1));
+}

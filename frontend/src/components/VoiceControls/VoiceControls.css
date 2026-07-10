@@ -1,1 +1,47 @@
- 
+#text-input div:has(> button):not(:has(> input)) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+#text-input div:has(> button):not(:has(> input)) button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: var(--accent, #aa3bff);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+#text-input div:has(> button):not(:has(> input)) button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+#text-input div:has(> button):not(:has(> input)) button:focus-visible {
+  outline: none;
+  border: 1px solid var(--accent, #aa3bff);
+  box-shadow: 0 0 0 2px var(--accent-bg, rgba(170, 59, 255, 0.1));
+}
+
+#text-input div:has(> button):not(:has(> input)) button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#text-input div:has(> button):not(:has(> input)) p {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #991b1b;
+  font-size: 0.85rem;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}

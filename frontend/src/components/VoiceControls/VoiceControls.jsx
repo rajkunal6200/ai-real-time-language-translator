@@ -1,4 +1,5 @@
 import { useState } from "react"
+import "./VoiceControls.css"
 
 function VoiceControls({ onTranscript, language }) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition

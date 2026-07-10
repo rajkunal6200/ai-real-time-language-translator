@@ -3,6 +3,7 @@ import LanguageSelector from "../LanguageSelector/LanguageSelector"
 import { languages } from "../../data/languages"
 import { translateText } from "../../services/api"
 import TranslationResult from "../TranslationResult/TranslationResult"
+import VoiceControls from "../VoiceControls/VoiceControls"
 
 function TranslatorForm() {
   const targetLanguages = languages.filter((lang) => lang.value !== "auto")
@@ -77,6 +78,7 @@ function TranslatorForm() {
             value={text}
             onChange={(event) => setText(event.target.value)}
           />
+          <VoiceControls onTranscript={setText} language={sourceLanguage === "auto" ? "en-US" : sourceLanguage} />
         </section>
         <section id="actions">
           <button type="submit" disabled={isLoading}>{isLoading ? "Translating..." : "Translate"}</button>

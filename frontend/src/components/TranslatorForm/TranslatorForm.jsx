@@ -5,6 +5,7 @@ import { translateText } from "../../services/api"
 import TranslationResult from "../TranslationResult/TranslationResult"
 import VoiceControls from "../VoiceControls/VoiceControls"
 import OCR from "../OCR/OCR"
+import DocumentTranslator from "../DocumentTranslator/DocumentTranslator"
 
 function TranslatorForm() {
   const targetLanguages = languages.filter((lang) => lang.value !== "auto")
@@ -81,6 +82,7 @@ function TranslatorForm() {
           />
           <VoiceControls onTranscript={setText} language={sourceLanguage === "auto" ? "en-US" : sourceLanguage} />
           <OCR onExtractedText={setText} />
+          <DocumentTranslator onExtractedText={setText} />
         </section>
         <section id="actions">
           <button type="submit" disabled={isLoading}>{isLoading ? "Translating..." : "Translate"}</button>

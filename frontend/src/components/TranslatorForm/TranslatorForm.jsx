@@ -5,15 +5,49 @@ import { translateText } from "../../services/api"
 import TranslationResult from "../TranslationResult/TranslationResult"
 
 function TranslatorForm() {
+  const targetLanguages = languages.filter((lang) => lang.value !== "auto")
+
   const [sourceLanguage, setSourceLanguage] = useState("auto")
   const [targetLanguage, setTargetLanguage] = useState("en")
   const [text, setText] = useState("")
   const [translatedText, setTranslatedText] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const result = await translateText(text, sourceLanguage, targetLanguage)
-    setTranslatedText(result.translated_text)
+    if (!text.trim()) {
+      setError("Please enter text to translate.")
+      return
+    }
+    if (sourceLanguage !== "auto" && sourceLanguage === targetLanguage) {
+      setError("Source and target languages must be different.")
+      return
+    }
+    setError("")
+    setIsLoading(true)
+    try {
+      const result = await translateText(text, sourceLanguage, targetLanguage)
+      setTranslatedText(result.translated_text)
+    } catch {
+      setError("Translation failed. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSwapLanguages = () => {
+    if (sourceLanguage === "auto") return
+    const temp = sourceLanguage
+    setSourceLanguage(targetLanguage)
+    setTargetLanguage(temp)
+    if (translatedText) {
+      const tempText = text
+      setText(translatedText)
+      setTranslatedText(tempText)
+    } else {
+      setText("")
+    }
   }
 
   return (
@@ -27,10 +61,11 @@ function TranslatorForm() {
             value={sourceLanguage}
             onChange={(event) => setSourceLanguage(event.target.value)}
           />
+          <button type="button" onClick={handleSwapLanguages} disabled={sourceLanguage === "auto"}>Swap</button>
           <LanguageSelector
             label="Target Language"
             name="target"
-            options={languages}
+            options={targetLanguages}
             value={targetLanguage}
             onChange={(event) => setTargetLanguage(event.target.value)}
           />
@@ -44,7 +79,8 @@ function TranslatorForm() {
           />
         </section>
         <section id="actions">
-          <button type="submit">Translate</button>
+          <button type="submit" disabled={isLoading}>{isLoading ? "Translating..." : "Translate"}</button>
+          {error && <p>{error}</p>}
         </section>
       </form>
       <TranslationResult translatedText={translatedText} />

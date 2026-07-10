@@ -8,6 +8,9 @@ export async function translateText(text, source, target) {
     },
     body: JSON.stringify({ text, source, target })
   })
+  if (!response.ok) {
+    throw new Error("Translation request failed.")
+  }
   const data = await response.json()
   return data
 }
